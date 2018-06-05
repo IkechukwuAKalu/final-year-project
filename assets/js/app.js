@@ -23,27 +23,40 @@ $(document).ready(() => {
 function initChat(user) {
     const socket = io();
 
+    socket.on('socket_message', (data) => {
+        let msgItem = `<div class='col-md-12 col-xs-12'>
+            <div style='padding:5px 10px 5px 10px;background:#f0f0f0;color:#000;margin-bottom:10px;text-align:center;'>
+                <i style='font-size:12px;padding:5px;'> ${data.message}</i>
+            </div>
+        </div>`;
+        $('#msgs_div').prepend(msgItem);
+    });
+
     socket.on('new_message', (data) => {
         let bg = data.sender === user ? 'green' : 'purple';
-        let msgItem = `
-            <div style='padding:5px 10px 5px 10px;background:${bg};color:#fff;border-radius:15px;margin-bottom:10px;'>
+        let floatDiv = data.sender === user ? 'right' : 'left';
+        let msgItem = `<div class='col-md-12 col-xs-12'>
+            <div style='padding:5px 10px 5px 10px;background:${bg};color:#fff;border-radius:15px;margin-bottom:10px;float:${floatDiv};'>
                 <p>
-                    ${data.msg}<br>
+                    <span>${data.msg}</span><br>
                     <i style='font-size:12px;float:right;padding:0px;'>- ${data.sender}</i>
-                    <u class="text-center mark_spam" style='float:left;font-size:11px;cursor:pointer;'>mark as spam</u>
+                    <u class='text-center mark_spam' style='float:left;font-size:11px;cursor:pointer;'>mark as spam</u>
                     <div style='clear:both;'></div>
                 </p>
-            </div>`;
+            </div>
+        </div>`;
         $('#msgs_div').prepend(msgItem);
+
+        // This has to be in the context of the defining function
+        $('.mark_spam').on('click', (e) => {
+            let msg = e.target.parentElement.children[0].textContent.toString();
+            alert(msg)
+        });
     });
 
     $('#send_msg').on('click', (e) => {
         let msg = $('#message').val().trim();
         if (! msg) return alert('Enter a message');
         else socket.emit('send_message', { msg, sender: user });
-    });
-
-    $('.mark_spam').on('click', (e) => {
-        console.log(e)
     });
 }

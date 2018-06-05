@@ -14,12 +14,15 @@ app.get('/', (req, res, next) => {
 });
 
 io.on('connection', (socket) => {
-    console.log('New socket connected');
+    showSocketMsg(socket, 'A User has joined the conversation');
     socket.on('send_message', (data) => {
-        console.log(data);
         io.emit('new_message', data);
     });
     socket.on('disconnect', (e) => {
-        console.log('Socket disconnected', e);
+        showSocketMsg(socket, 'A User has left the conversation');
     });
 });
+
+function showSocketMsg(socket, message) {
+    io.emit('socket_message', { message });
+}
