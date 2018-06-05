@@ -1,0 +1,33 @@
+{
+  "name": "node-chat-app",
+  "version": "0.1.0",
+  "description": "A Node.js chat app demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IkechukwuAKalu/node-chat-app.git"
+  },
+  "keywords": [
+    "chat",
+    "socket.io",
+    "demo"
+  ],
+  "author": "Ikechukwu A. Kalu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IkechukwuAKalu/node-chat-app/issues"
+  },
+  "homepage": "https://github.com/IkechukwuAKalu/node-chat-app#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "node-naive-bayes": "^0.1.1",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
+  }
+}
