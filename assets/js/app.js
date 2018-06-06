@@ -41,7 +41,7 @@ function initChat(user) {
                 <p>
                     <span>${(data.spam ? '<-- spam blocked -->' : data.message)}</span><br>
                     <i style='font-size:12px;float:right;padding:0px;'>- ${data.sender}</i>
-                    <u class='text-center mark_spam' style='float:left;font-size:11px;cursor:pointer;'>mark as spam</u>
+                    <u class='text-center mark_spam' style='float:left;font-size:11px;cursor:pointer;'>${(data.spam ? '' : '    ')}</u>
                     <div style='clear:both;'></div>
                 </p>
             </div>
