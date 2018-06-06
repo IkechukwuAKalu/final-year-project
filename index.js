@@ -32,8 +32,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('mark_spam', (data) => {
-        console.log(`Marking "${data.message}" as spam`);
-        naiveBayes.trainInline(data.message, 'bad');
+        naiveBayes.trainInline(data.message, 'bad', true, './training_data.txt');
     });
 });
 
