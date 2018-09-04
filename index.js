@@ -10,18 +10,20 @@ const TrainingData = require('./lib/models/training_data');
 let naiveBayes = new NaiveBayes();
 
 // Begin training from file
-console.log('Classifier File training started ...');
+console.log('----------------------------');
+console.log('Classifier File training started ...', new Date());
 naiveBayes.trainFromFile('./training_data.txt');
-console.log('Classifier File training finished ...');
-
+console.log('Classifier File training finished ...', new Date());
+console.log('----------------------------');
 // Begin training from database
-console.log('Classifier Database training started ...');
+console.log('Classifier Database training started ...', new Date());
 TrainingData.find({})
 .then((data) => {
     data.forEach(datum => naiveBayes.trainInline(datum.text, datum.category));
 })
 .catch(err => console.log(err));
-console.log('Classifier Database training finished ...');
+console.log('Classifier Database training finished ...', new Date());
+console.log('----------------------------');
 
 // Start the Node server
 const PORT = process.env.PORT || 3000;

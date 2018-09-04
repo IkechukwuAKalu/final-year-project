@@ -2,6 +2,7 @@ let socket = null,
     user = null;
 
 $(document).ready(() => {
+    enableEnterSubmit();
     $('#enter_chat').on('click', (e) => {
         user = $('#username').val().trim();
         if (! user) return alert('Please enter a username');
@@ -17,9 +18,10 @@ $(document).ready(() => {
         // set the username
         let u = `
         <img style='width:40px;' src='assets/images/user.png' />
-        <b>${user}</b>`;
+        ${user}`;
         $('#user').append(u);
         // Initialize the chat session
+        $('#message').focus();
         initChat();
     } 
 });
@@ -61,6 +63,10 @@ function initChat() {
     $('#send_msg').on('click', sendMessage);
 }
 
+/**
+ * Shows messages relating to the Socket
+ * @param {Object} data 
+ */
 const showSocketEvent = (data) => {
     let msgItem = `<div class='col-md-12 col-xs-12'>
         <div style='padding:5px 10px 5px 10px;background:#f0f0f0;color:#000;margin-bottom:10px;text-align:center;'>
@@ -99,4 +105,21 @@ const sendMessage = (e) => {
     $('#message').val(''); // clear the message input box
     if (! message) return alert('Enter a message');
     else socket.emit('send_message', { message, sender: user });
+};
+
+/**
+ * This causes the submit button to be clicked when the ENTER button
+ * is pressed
+ */
+const enableEnterSubmit = () => {
+    document.getElementById("username").addEventListener("keyup", (e) => {
+        if (! e) e = window.event;
+        if (e.keyCode === 13) $('#enter_chat').click();
+    }, false);
+
+    document.getElementById("message").addEventListener("keyup", (e) => {
+        if (! e) e = window.event;
+        // Enter is pressed
+        if (e.keyCode === 13) $('#send_msg').click();
+    }, false);
 };
